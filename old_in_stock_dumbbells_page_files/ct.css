@@ -1,0 +1,107 @@
+.ct-woovideo-hidden{
+    display:none;
+    visibility:hidden;
+}
+
+.hidden {
+    display:none !important;
+}
+
+.ct-woovideo-active{
+    display:block;
+    visibility:visible;
+}
+
+
+.mfp-wrap .ct-woovideo-active{
+    margin-left:auto !important;
+    margin-right:auto !important;
+}
+
+.ct-woovideo-gallery-thumbnail {
+    position:relative;
+    display:block;
+}
+
+.ct-woovideo-gallery-thumbnail:before {
+    content:"";
+}
+
+.ct-woovideo-gallery-thumbnail img{
+    width:100%;
+    height:auto
+}
+
+.ct-woovideo-thumbnail-button-img {
+    width:100%;
+    height:auto
+}
+
+.ct-woovideo-video {
+    text-align:center;
+}
+
+.ct-woovideo-gallery-videos .ct-woovideo-video {
+    position:relative;
+}
+
+.ct-woovideo-gallery-videos .ct-woovideo-video a.ct-woovideo-close-video {
+    position:absolute;
+    text-decoration: none;
+    top:0.7em;
+    right:-0.2em;
+    line-height:0;
+    visibility:hidden;
+    color:#ffffff;
+}
+
+.ct-woovideo-gallery-videos .ct-woovideo-video a.ct-woovideo-close-video:before {
+    content:"\f153";
+    font-family:Dashicons;
+    font-size:2em;
+    font-weight:200;
+    -webkit-font-smoothing:antialiased;
+
+}
+
+.ct-woovideo-gallery-videos .ct-woovideo-video:hover a.ct-woovideo-close-video {
+    visibility:visible;
+    color: #000000;
+    transition:color 1s;
+}
+
+.ct-woovideo-gallery-videos .ct-woovideo-video a.ct-woovideo-close-video:hover {
+    color:#ffffff;
+    transition:color .5s ease;
+}
+
+.ct-woovideo-video video,
+.ct-woovideo-video iframe {
+
+width:100% !important;
+}
+
+.ct-woovideo-generic-iframe {
+    border: 2px solid #000000;
+}
+/*
+     FILE ARCHIVED ON 14:57:29 Feb 02, 2020 AND RETRIEVED FROM THE
+     INTERNET ARCHIVE ON 00:15:50 Jul 20, 2020.
+     JAVASCRIPT APPENDED BY WAYBACK MACHINE, COPYRIGHT INTERNET ARCHIVE.
+
+     ALL OTHER CONTENT MAY ALSO BE PROTECTED BY COPYRIGHT (17 U.S.C.
+     SECTION 108(a)(3)).
+*/
+/*
+playback timings (ms):
+  exclusion.robots: 0.135
+  PetaboxLoader3.datanode: 131.992 (4)
+  esindex: 0.009
+  LoadShardBlock: 130.857 (3)
+  RedisCDXSource: 0.546
+  CDXLines.iter: 15.073 (3)
+  exclusion.robots.policy: 0.126
+  load_resource: 81.01
+  captures_list: 148.795
+  PetaboxLoader3.resolve: 75.918
+*/

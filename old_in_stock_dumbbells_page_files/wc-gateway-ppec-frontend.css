@@ -1,0 +1,80 @@
+.wcppec-checkout-buttons {
+	text-align: center;
+	margin: 1em 0;
+	overflow: hidden;
+}
+.wcppec-checkout-buttons .woocommerce-error {
+	text-align: left;
+}
+.wcppec-checkout-buttons__separator {
+	display: block;
+	opacity: .5;
+	margin: 0 0 1em;
+}
+.wcppec-checkout-buttons__button {
+	display: inline-block;
+	text-decoration: none !important;
+	border: 0 !important;
+	padding-top: 1em;
+}
+.wcppec-checkout-buttons__button img {
+	margin: 0 auto;
+}
+.paypal-button-widget .paypal-button,
+.paypal-button-widget .paypal-button:hover {
+	background: transparent;
+	box-shadow: none;
+	border: none;
+}
+.wcppec-cart-widget-button {
+	display: inline-block;
+	text-decoration: none !important;
+	border: 0 !important;
+}
+.site-header .widget_shopping_cart p.buttons.wcppec-cart-widget-spb {
+    padding: 0 1em 1em;
+}
+.site-header .widget_shopping_cart .woocommerce-mini-cart__empty-message + p.buttons.wcppec-cart-widget-spb {
+	display: none;
+}
+
+.payment_method_ppec_paypal img {
+	max-height: 68px !important;
+	border-radius: 0;
+}
+
+.wc-gateway-ppec-cancel {
+	display: block;
+	text-align: center;
+	padding: 10px;
+}
+
+#woo_pp_ec_button_checkout {
+	display: none;
+}
+
+#payment .place-order .button {
+	display: block;
+}
+
+/*
+     FILE ARCHIVED ON 14:57:17 Feb 02, 2020 AND RETRIEVED FROM THE
+     INTERNET ARCHIVE ON 00:15:51 Jul 20, 2020.
+     JAVASCRIPT APPENDED BY WAYBACK MACHINE, COPYRIGHT INTERNET ARCHIVE.
+
+     ALL OTHER CONTENT MAY ALSO BE PROTECTED BY COPYRIGHT (17 U.S.C.
+     SECTION 108(a)(3)).
+*/
+/*
+playback timings (ms):
+  exclusion.robots: 0.133
+  PetaboxLoader3.datanode: 68.143 (4)
+  captures_list: 130.201
+  PetaboxLoader3.resolve: 686.674 (2)
+  LoadShardBlock: 110.7 (3)
+  exclusion.robots.policy: 0.124
+  RedisCDXSource: 0.611
+  CDXLines.iter: 16.318 (3)
+  esindex: 0.009
+  load_resource: 657.546
+*/

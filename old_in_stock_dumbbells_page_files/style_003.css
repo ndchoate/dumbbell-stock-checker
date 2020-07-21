@@ -1,0 +1,42 @@
+/*
+Theme Name: Porto
+Theme URI: http://www.portotheme.com/wordpress/porto
+Author: P-THEMES
+Author URI: http://www.portotheme.com/
+Description: Porto Responsive Wordpress + eCommerce Theme.
+Version: 5.0.1
+License: Commercial
+License URI: http://themeforest.net/licenses/regular_extended
+Tags: woocommerce, corporate, ecommerce, responsive, blue, black, green, white, light, dark, red, two-columns, three-columns, four-columns, left-sidebar, right-sidebar, fixed-layout, responsive-layout, custom-menu, editor-style, featured-images, flexible-header, full-width-template, microformats, post-formats, rtl-language-support, sticky-post, theme-options, translation-ready, accessibility-ready
+Text Domain: porto
+*/
+
+/*************** ADD YOUR CUSTOM CSS HERE  ***************/
+
+.bypostauthor { display: block; }
+.shop-loop-after .product-details {
+	text-align: left;
+	clear: both;
+	margin-top: 4rem;
+}
+/*
+     FILE ARCHIVED ON 14:57:09 Feb 02, 2020 AND RETRIEVED FROM THE
+     INTERNET ARCHIVE ON 00:15:55 Jul 20, 2020.
+     JAVASCRIPT APPENDED BY WAYBACK MACHINE, COPYRIGHT INTERNET ARCHIVE.
+
+     ALL OTHER CONTENT MAY ALSO BE PROTECTED BY COPYRIGHT (17 U.S.C.
+     SECTION 108(a)(3)).
+*/
+/*
+playback timings (ms):
+  load_resource: 36.647
+  LoadShardBlock: 42.587 (3)
+  exclusion.robots.policy: 0.185
+  exclusion.robots: 0.2
+  esindex: 0.014
+  captures_list: 211.205
+  RedisCDXSource: 149.291
+  PetaboxLoader3.resolve: 25.418
+  PetaboxLoader3.datanode: 41.583 (4)
+  CDXLines.iter: 15.954 (3)
+*/

@@ -1,0 +1,98 @@
+/*Widgets*/
+/*Widgets*/
+/*Widgets*/
+/*Widgets*/
+/*Widgets*/
+.widget-us-gallery-div {
+	width:47px !important;
+	height:47px !important;
+	float:left !important;
+	margin:0 2px 2px 0 !important;
+}
+.widget-us-gallery-img {
+	border:none !important;
+	margin:0 !important;
+	padding:0 !important;
+	width:47px !important;
+	filter: alpha(opacity=100) !important;
+	opacity: 1.0 !important;
+	-webkit-transition: all 1s ease;
+     -moz-transition: all 1s ease;
+       -o-transition: all 1s ease;
+      -ms-transition: all 1s ease;
+          transition: all 1s ease;
+    -webkit-backface-visibility: hidden;
+	-moz-backface-visibility: hidden;
+  transform: translate3d(0px,0px,0px); 
+  filter: brightness(1.01);
+}
+.widget-us-gallery-img:hover {
+	filter: alpha(opacity=60) !important;
+	opacity: 0.6 !important;
+	-webkit-backface-visibility: hidden;
+	-moz-backface-visibility: hidden;
+  transform: translate3d(0px,0px,0px); 
+  filter: brightness(1.01);
+}
+.widget-us-classic-div {
+	margin:0 0 2px 0 !important;
+}
+.widget-us-classic-div img{
+	filter: alpha(opacity=100) !important;
+	opacity: 1.0 !important;
+	-webkit-transition: all 1s ease;
+     -moz-transition: all 1s ease;
+       -o-transition: all 1s ease;
+      -ms-transition: all 1s ease;
+          transition: all 1s ease;
+    -webkit-backface-visibility: hidden;
+	-moz-backface-visibility: hidden;
+  transform: translate3d(0px,0px,0px); 
+  filter: brightness(1.01);
+}
+.widget-us-classic-div img:hover{
+	filter: alpha(opacity=60) !important;
+	opacity: 0.6 !important;
+	-webkit-backface-visibility: hidden;
+	-moz-backface-visibility: hidden;
+  transform: translate3d(0px,0px,0px); 
+  filter: brightness(1.01);
+}
+.widget-us-classic-img {
+	border:none !important;
+	margin:0 !important;
+	padding:0 !important;
+	width:100% !important;
+	filter: alpha(opacity=100) !important;
+	opacity: 1.0 !important;
+	-webkit-transition: all 1s ease;
+     -moz-transition: all 1s ease;
+       -o-transition: all 1s ease;
+      -ms-transition: all 1s ease;
+          transition: all 1s ease;
+}
+.widget-us-classic-img:hover {
+	filter: alpha(opacity=60) !important;
+	opacity: 0.6 !important;
+}
+/*
+     FILE ARCHIVED ON 14:57:09 Feb 02, 2020 AND RETRIEVED FROM THE
+     INTERNET ARCHIVE ON 00:15:51 Jul 20, 2020.
+     JAVASCRIPT APPENDED BY WAYBACK MACHINE, COPYRIGHT INTERNET ARCHIVE.
+
+     ALL OTHER CONTENT MAY ALSO BE PROTECTED BY COPYRIGHT (17 U.S.C.
+     SECTION 108(a)(3)).
+*/
+/*
+playback timings (ms):
+  RedisCDXSource: 121.724
+  esindex: 0.015
+  exclusion.robots: 0.184
+  LoadShardBlock: 57.902 (3)
+  captures_list: 199.438
+  exclusion.robots.policy: 0.171
+  CDXLines.iter: 16.193 (3)
+  PetaboxLoader3.datanode: 39.716 (4)
+  load_resource: 57.964
+  PetaboxLoader3.resolve: 22.918
+*/
