@@ -7,7 +7,7 @@ from twilio.rest import Client
 
 
 account_sid = 'AC4c195802a6bcf042dcefac3c5943f1cf'
-auth_token = 'enter your auth token here'
+auth_token = ''
 client = Client(account_sid, auth_token)
 
 
@@ -134,6 +134,23 @@ def check_for_super_bench_pro():
                             'item is out of stock until approx')
 
 
+def check_for_dumbbell_product_page():
+    print('Info for adjustable dumbbell products page:')
+    url = 'https://www.ironmaster.com/products/quick-lock-adjustable-dumbbells-75/'
+    response = requests.get(url)
+
+    if response.status_code != 200:
+        send_sms_msg('ATTENTION NEEDED! Response other than 200 OK received from Ironmaster website '
+                     '(got a ' + str(response.status_code) + ')')
+        return
+
+    html = response.text
+
+    products_not_shown = 'stock has been unexpectedly delayed'
+    if not products_not_shown:
+        send_sms_msg('Dumbbells product page might be up again')
+
+
 def main():
     send_sms_msg('Test message')
     start_time = time.time()
@@ -147,9 +164,10 @@ def main():
         st = datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S')
         print('\n---------------------------------------------\n')
         print(st + ' EST\n')
-        check_for_dumbbells()
-        check_for_super_bench()
-        check_for_super_bench_pro()
+        # check_for_dumbbells()
+        # check_for_super_bench()
+        # check_for_super_bench_pro()
+        check_for_dumbbell_product_page()
         time.sleep(600.0 - ((time.time() - start_time) % 600.0))
 
 
