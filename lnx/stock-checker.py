@@ -172,6 +172,23 @@ def check_page_for_msg(label, msg, url):
         print(e)
 
 
+def check_for_dumbbell_product_page():
+    print('Info for adjustable dumbbell products page:')
+    url = 'https://www.ironmaster.com/products/quick-lock-adjustable-dumbbells-75/'
+    response = requests.get(url)
+
+    if response.status_code != 200:
+        send_sms_msg('ATTENTION NEEDED! Response other than 200 OK received from Ironmaster website '
+                     '(got a ' + str(response.status_code) + ')')
+        return
+
+    html = response.text
+
+    products_not_shown = 'stock has been unexpectedly delayed'
+    if not products_not_shown:
+        send_sms_msg('Dumbbells product page might be up again')
+
+
 def main():
     send_sms_msg('Test message')
     start_time = time.time()
