@@ -7,7 +7,7 @@ from twilio.rest import Client
 
 
 account_sid = 'AC4c195802a6bcf042dcefac3c5943f1cf'
-auth_token = 'enter your auth token here'
+auth_token = ''
 client = Client(account_sid, auth_token)
 
 
@@ -133,6 +133,44 @@ def check_for_super_bench_pro():
     basic_check_for_product('https://www.ironmaster.com/products/super-bench-pro/',
                             'item is out of stock until approx')
 
+def check_if_website_is_up():
+    try:
+        # url = 'https://www.ironmaster.com/products/super-bench-pro/'
+        url = 'https://www.ironmaster.com/'
+
+        response = requests.get(url)
+
+        probably_up = not (response.status_code == 503 or response.status_code == 403)
+
+        if response.status_code == 200 or probably_up:
+            send_sms_msg('Ironmaster site probably back up. Got a 200 or not 503 or 403 response for super bench pro page')
+
+        print('\nResponse from super bench link: ' + str(response.status_code) + '\n')
+    except Exception as e:
+        send_sms_msg('Exception occurred while sending request to Ironmaster website.')
+        print(e)
+        print(e.with_traceback())
+
+
+def check_page_for_msg(label, msg, url):
+    try:
+        response = requests.get(url)
+
+        if response.status_code != 200:
+            send_sms_msg('Attention needed. Got a response other than 200 OK from ' + label + ' page.')
+
+        html = response.text
+        disclaimer_msg_present = msg in html
+
+        print('Value of disclaimer_msg_present for ' + label + ' page: ' + str(disclaimer_msg_present))
+        if not disclaimer_msg_present:
+            send_sms_msg('ATTENTION! ' + label + ' page message has changed.')
+
+        print('\nResponse from ' + label + ' page link: ' + str(response.status_code) + '\n')
+    except Exception as e:
+        send_sms_msg('Exception occurred while sending request to Ironmaster website.')
+        print(e)
+
 
 def main():
     send_sms_msg('Test message')
@@ -147,9 +185,12 @@ def main():
         st = datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S')
         print('\n---------------------------------------------\n')
         print(st + ' EST\n')
-        check_for_dumbbells()
-        check_for_super_bench()
-        check_for_super_bench_pro()
+        check_page_for_msg('Quick-Lock Dumbbells',
+                           'This item is out of stock until approx mid-Sept',
+                           'https://www.ironmaster.com/products/quick-lock-adjustable-dumbbells-75-original/')
+        check_page_for_msg('Stock Information',
+                           'Estimated mid September for the next batch lottery',
+                           'https://www.ironmaster.com/dumbbell-stock-information/')
         time.sleep(600.0 - ((time.time() - start_time) % 600.0))
 
 
