@@ -2,12 +2,16 @@ from bs4 import BeautifulSoup
 import datetime
 import requests
 import schedule
+from seleniumrequests import Firefox
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 import time
 from twilio.rest import Client
 
 
 account_sid = 'AC4c195802a6bcf042dcefac3c5943f1cf'
-auth_token = '07a9b859bb91c1a80b4164a8f32dd74b'
+auth_token = 'b648b996aec9820cbfab6e1a0db7796a'
 client = Client(account_sid, auth_token)
 
 
@@ -165,10 +169,38 @@ def check_page_for_msg(label, msg, url):
 
         disclaimer_msg_present = msg in html
 
+        html_file = open(label + '.html', 'w', encoding='utf-8')
+        html_file.write(html)
+        html_file.close()
         availability = soup.find('div', {'class', 'availability'})
 
         print('Value of disclaimer_msg_present for ' + label + ' page: ' + str(disclaimer_msg_present))
         if not disclaimer_msg_present:
+            send_sms_msg('ATTENTION! ' + label + ' page message has changed.')
+
+        print('\nResponse from ' + label + ' page link: ' + str(response.status_code) + '\n')
+    except Exception as e:
+        send_sms_msg('Exception occurred while sending request to Ironmaster website.')
+        print(e)
+
+
+def check_nvidia_page_for_msg(label, msg, url):
+    try:
+        response = requests.get(url)
+
+        if response.status_code != 200:
+            send_sms_msg('Attention needed. Got a response other than 200 OK from ' + label + ' page.')
+
+        html = response.text
+
+        res = [i for i in range(len(html)) if html.startswith(msg, i)]
+
+        disclaimer_msg_present = msg in html
+        incorrect_num_of_substrs = len(res) != 4
+
+        print('Value of disclaimer_msg_present for ' + label + ' page: ' + str(disclaimer_msg_present))
+        print('Value of incorrect_num_of_substrs for ' + label + ' page: ' + str(incorrect_num_of_substrs))
+        if not disclaimer_msg_present or incorrect_num_of_substrs:
             send_sms_msg('ATTENTION! ' + label + ' page message has changed.')
 
         print('\nResponse from ' + label + ' page link: ' + str(response.status_code) + '\n')
@@ -195,7 +227,7 @@ def check_for_dumbbell_product_page():
 
 
 def main():
-    send_sms_msg('Test message')
+    # send_sms_msg('Test message')
     start_time = time.time()
     schedule.every().day.at("08:00").do(send_health_check)
     schedule.every().day.at("15:00").do(send_health_check)
@@ -216,8 +248,8 @@ def main():
         check_page_for_msg('Sit-Up Attachment',
                            'This item is out of stock until approx mid September',
                            'https://www.ironmaster.com/products/crunch-situp-attachment/')
-        check_page_for_msg('RTX 3080',
-                           'Available on September 17th',
+        check_nvidia_page_for_msg('RTX 3080',
+                           'NOTIFY ME',
                            'https://www.nvidia.com/en-us/geforce/graphics-cards/30-series/rtx-3080/')
         # time.sleep(600.0 - ((time.time() - start_time) % 600.0))
         time.sleep(150.0 - ((time.time() - start_time) % 150.0))
