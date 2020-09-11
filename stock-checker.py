@@ -7,7 +7,7 @@ from twilio.rest import Client
 
 
 account_sid = 'AC4c195802a6bcf042dcefac3c5943f1cf'
-auth_token = ''
+auth_token = '07a9b859bb91c1a80b4164a8f32dd74b'
 client = Client(account_sid, auth_token)
 
 
@@ -160,7 +160,12 @@ def check_page_for_msg(label, msg, url):
             send_sms_msg('Attention needed. Got a response other than 200 OK from ' + label + ' page.')
 
         html = response.text
+
+        soup = BeautifulSoup(html, 'html.parser')
+
         disclaimer_msg_present = msg in html
+
+        availability = soup.find('div', {'class', 'availability'})
 
         print('Value of disclaimer_msg_present for ' + label + ' page: ' + str(disclaimer_msg_present))
         if not disclaimer_msg_present:
@@ -202,13 +207,20 @@ def main():
         st = datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S')
         print('\n---------------------------------------------\n')
         print(st + ' EST\n')
-        check_page_for_msg('Quick-Lock Dumbbells',
-                           'This item is out of stock until approx mid-Sept',
-                           'https://www.ironmaster.com/products/quick-lock-adjustable-dumbbells-75-original/')
-        check_page_for_msg('Stock Information',
-                           'Estimated mid September for the next batch lottery',
-                           'https://www.ironmaster.com/dumbbell-stock-information/')
-        time.sleep(600.0 - ((time.time() - start_time) % 600.0))
+        # check_page_for_msg('Quick-Lock Dumbbells',
+        #                    'This item is out of stock until approx mid-Sept',
+        #                    'https://www.ironmaster.com/products/quick-lock-adjustable-dumbbells-75-original/')
+        # check_page_for_msg('Stock Information',
+        #                    'Estimated mid September for the next batch lottery',
+        #                    'https://www.ironmaster.com/dumbbell-stock-information/')
+        check_page_for_msg('Sit-Up Attachment',
+                           'This item is out of stock until approx mid September',
+                           'https://www.ironmaster.com/products/crunch-situp-attachment/')
+        check_page_for_msg('RTX 3080',
+                           'Available on September 17th',
+                           'https://www.nvidia.com/en-us/geforce/graphics-cards/30-series/rtx-3080/')
+        # time.sleep(600.0 - ((time.time() - start_time) % 600.0))
+        time.sleep(150.0 - ((time.time() - start_time) % 150.0))
 
 
 if __name__ == '__main__':
