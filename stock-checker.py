@@ -11,7 +11,7 @@ from twilio.rest import Client
 
 
 account_sid = 'AC4c195802a6bcf042dcefac3c5943f1cf'
-auth_token = 'b648b996aec9820cbfab6e1a0db7796a'
+auth_token = ''
 client = Client(account_sid, auth_token)
 
 
@@ -226,6 +226,41 @@ def check_for_dumbbell_product_page():
         send_sms_msg('Dumbbells product page might be up again')
 
 
+def check_newegg_for_rtx_3080(label, msg, url):
+    try:
+        response = requests.get(url)
+
+        if response.status_code != 200:
+            send_sms_msg('Attention needed. Got a response other than 200 OK from ' + label + ' page.')
+
+        html = response.text
+
+        soup = BeautifulSoup(html, 'html.parser')
+
+        # res = [i for i in range(len(html)) if html.startswith(msg, i)]
+
+        item_containers = soup.findAll("div", {"class": "item-cell"})
+
+        # print('Value of res from newegg page for OUT OF STOCK instances: ' + str(res))
+
+        item_in_stock = False
+        for item in item_containers:
+            content = item.text
+            out_of_stock_occurrences = content.count('OUT OF STOCK')
+            if out_of_stock_occurrences != 1:
+                item_in_stock = True
+                break
+
+        print('Value of item_in_stock for ' + label + ' page: ' + str(item_in_stock))
+        if item_in_stock:
+            send_sms_msg('ATTENTION! ' + label + ' page has an item that seems to be in stock.')
+
+        print('\nResponse from ' + label + ' page link: ' + str(response.status_code) + '\n')
+    except Exception as e:
+        send_sms_msg('Exception occurred while sending request to Ironmaster website.')
+        print(e)
+
+
 def main():
     # send_sms_msg('Test message')
     start_time = time.time()
@@ -239,18 +274,16 @@ def main():
         st = datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S')
         print('\n---------------------------------------------\n')
         print(st + ' EST\n')
-        # check_page_for_msg('Quick-Lock Dumbbells',
-        #                    'This item is out of stock until approx mid-Sept',
-        #                    'https://www.ironmaster.com/products/quick-lock-adjustable-dumbbells-75-original/')
-        # check_page_for_msg('Stock Information',
-        #                    'Estimated mid September for the next batch lottery',
-        #                    'https://www.ironmaster.com/dumbbell-stock-information/')
         check_page_for_msg('Sit-Up Attachment',
-                           'This item is out of stock until approx mid September',
+                           'This item is out of stock until approx mid October',
                            'https://www.ironmaster.com/products/crunch-situp-attachment/')
-        check_nvidia_page_for_msg('RTX 3080',
-                           'NOTIFY ME',
-                           'https://www.nvidia.com/en-us/geforce/graphics-cards/30-series/rtx-3080/')
+        # check_nvidia_page_for_msg('RTX 3080',
+        #                    'NOTIFY ME',
+        #                    'https://www.nvidia.com/en-us/geforce/graphics-cards/30-series/rtx-3080/')
+        check_newegg_for_rtx_3080('Newegg RTX 3080s',
+                                  'OUT OF STOCK',
+                                  'https://www.newegg.com/p/pl?N=100007709%20601357247')
+
         # time.sleep(600.0 - ((time.time() - start_time) % 600.0))
         time.sleep(150.0 - ((time.time() - start_time) % 150.0))
 
