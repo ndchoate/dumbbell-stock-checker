@@ -2,7 +2,7 @@ from bs4 import BeautifulSoup
 import datetime
 import requests
 import schedule
-from seleniumrequests import Firefox
+# from seleniumrequests import Firefox
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -262,7 +262,7 @@ def check_newegg_for_rtx_3080(label, msg, url):
 
 
 def main():
-    # send_sms_msg('Test message')
+    send_sms_msg('Test message')
     start_time = time.time()
     schedule.every().day.at("08:00").do(send_health_check)
     schedule.every().day.at("15:00").do(send_health_check)
@@ -274,12 +274,6 @@ def main():
         st = datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S')
         print('\n---------------------------------------------\n')
         print(st + ' EST\n')
-        check_page_for_msg('Sit-Up Attachment',
-                           'This item is out of stock until approx mid October',
-                           'https://www.ironmaster.com/products/crunch-situp-attachment/')
-        # check_nvidia_page_for_msg('RTX 3080',
-        #                    'NOTIFY ME',
-        #                    'https://www.nvidia.com/en-us/geforce/graphics-cards/30-series/rtx-3080/')
         check_newegg_for_rtx_3080('Newegg RTX 3080s',
                                   'OUT OF STOCK',
                                   'https://www.newegg.com/p/pl?N=100007709%20601357247')

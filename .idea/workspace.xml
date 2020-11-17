@@ -2,6 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fcfc2caf-3973-45f0-b08d-3e650181da7d" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/dumbbell-stock-checker.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dumbbell-stock-checker.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/stock-checker.py" beforeDir="false" afterPath="$PROJECT_DIR$/stock-checker.py" afterDir="false" />
     </list>
@@ -74,21 +76,25 @@
       <screen x="3840" y="46" width="2560" height="1394" />
     </state>
     <state width="1699" height="466" key="DebuggerActiveHint/3840.46.2560.1394/0.31.2560.1409@3840.46.2560.1394" timestamp="1601250660111" />
-    <state width="2539" height="384" key="GridCell.Tab.0.bottom" timestamp="1601336766576">
-      <screen x="3840" y="46" width="2560" height="1394" />
+    <state width="1899" height="276" key="GridCell.Tab.0.bottom" timestamp="1605395861262">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
+    <state width="1899" height="276" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1605395861262" />
     <state width="2539" height="384" key="GridCell.Tab.0.bottom/3840.46.2560.1394/0.31.2560.1409@3840.46.2560.1394" timestamp="1601336766576" />
-    <state width="2539" height="384" key="GridCell.Tab.0.center" timestamp="1601336766576">
-      <screen x="3840" y="46" width="2560" height="1394" />
+    <state width="1899" height="276" key="GridCell.Tab.0.center" timestamp="1605395861262">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
+    <state width="1899" height="276" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1605395861262" />
     <state width="2539" height="384" key="GridCell.Tab.0.center/3840.46.2560.1394/0.31.2560.1409@3840.46.2560.1394" timestamp="1601336766576" />
-    <state width="2539" height="384" key="GridCell.Tab.0.left" timestamp="1601336766576">
-      <screen x="3840" y="46" width="2560" height="1394" />
+    <state width="1899" height="276" key="GridCell.Tab.0.left" timestamp="1605395861261">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
+    <state width="1899" height="276" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1605395861261" />
     <state width="2539" height="384" key="GridCell.Tab.0.left/3840.46.2560.1394/0.31.2560.1409@3840.46.2560.1394" timestamp="1601336766576" />
-    <state width="2539" height="384" key="GridCell.Tab.0.right" timestamp="1601336766576">
-      <screen x="3840" y="46" width="2560" height="1394" />
+    <state width="1899" height="276" key="GridCell.Tab.0.right" timestamp="1605395861262">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
+    <state width="1899" height="276" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1605395861262" />
     <state width="2539" height="384" key="GridCell.Tab.0.right/3840.46.2560.1394/0.31.2560.1409@3840.46.2560.1394" timestamp="1601336766576" />
     <state width="2539" height="384" key="GridCell.Tab.1.bottom" timestamp="1601336768085">
       <screen x="3840" y="46" width="2560" height="1394" />
@@ -106,9 +112,10 @@
       <screen x="3840" y="46" width="2560" height="1394" />
     </state>
     <state width="2539" height="384" key="GridCell.Tab.1.right/3840.46.2560.1394/0.31.2560.1409@3840.46.2560.1394" timestamp="1601336768085" />
-    <state x="4621" y="380" key="SettingsEditor" timestamp="1599865477119">
-      <screen x="3840" y="46" width="2560" height="1394" />
+    <state x="586" y="249" key="SettingsEditor" timestamp="1605395786535">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
+    <state x="586" y="249" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1605395786535" />
     <state x="4621" y="380" key="SettingsEditor/3840.46.2560.1394/0.31.2560.1409@3840.46.2560.1394" timestamp="1599865477119" />
     <state width="1288" height="713" key="XDebugger.FullValuePopup" timestamp="1601336549458">
       <screen x="3840" y="46" width="2560" height="1394" />
