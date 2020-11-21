@@ -1,0 +1,6 @@
+1. Download geckodriver from https://github.com/mozilla/geckodriver/releases
+2. Put it at /home/ndchoate/gecko
+3. Open firefox
+4. Click the 3 lines in top right -> Help -> Troubleshooting Information
+5. Get the paths to your profile information and your firefox's binary
+6. Edit the script as necessary

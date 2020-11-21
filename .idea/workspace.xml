@@ -23,6 +23,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="restartRequiresConfirmation" value="false" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
@@ -109,10 +110,12 @@
     <state x="4621" y="380" key="SettingsEditor" timestamp="1599865477119">
       <screen x="3840" y="46" width="2560" height="1394" />
     </state>
+    <state x="586" y="249" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1605906883101" />
     <state x="4621" y="380" key="SettingsEditor/3840.46.2560.1394/0.31.2560.1409@3840.46.2560.1394" timestamp="1599865477119" />
-    <state width="1288" height="713" key="XDebugger.FullValuePopup" timestamp="1601336549458">
-      <screen x="3840" y="46" width="2560" height="1394" />
+    <state width="966" height="532" key="XDebugger.FullValuePopup" timestamp="1605906550318">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
+    <state width="966" height="532" key="XDebugger.FullValuePopup/0.0.1920.1040@0.0.1920.1040" timestamp="1605906550318" />
     <state width="1288" height="713" key="XDebugger.FullValuePopup/3840.46.2560.1394/0.31.2560.1409@3840.46.2560.1394" timestamp="1601336549458" />
     <state x="4783" y="347" width="672" height="678" key="search.everywhere.popup" timestamp="1601250250929">
       <screen x="3840" y="46" width="2560" height="1394" />
@@ -124,8 +127,13 @@
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/stock-checker.py</url>
-          <line>249</line>
-          <option name="timeStamp" value="18" />
+          <line>271</line>
+          <option name="timeStamp" value="19" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/stock-checker.py</url>
+          <line>258</line>
+          <option name="timeStamp" value="22" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
