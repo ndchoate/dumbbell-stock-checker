@@ -1,3 +1,4 @@
+from argparse import ArgumentParser
 from bs4 import BeautifulSoup
 import datetime
 import requests
@@ -12,7 +13,7 @@ from twilio.rest import Client
 
 
 account_sid = 'AC4c195802a6bcf042dcefac3c5943f1cf'
-auth_token = '577400c194cc34626885ebc79e5f63d1'
+auth_token = ''
 client = Client(account_sid, auth_token)
 
 
@@ -296,11 +297,77 @@ def selenium_check_newegg_for_rtx_3080(driver, label, msg, url):
         for button in buttons:
             if button.text == 'ADD TO CART':
                 button.click()
-                send_sms_msg('Added an RTX 3080 item to cart!!')
+                send_sms_msg('Newegg - Added an RTX 3080 item to cart!!')
                 break
 
     except Exception as e:
         send_sms_msg('Exception occurred while sending request to Ironmaster website.')
+        print(e)
+
+
+def selenium_check_best_buy_for_rtx_3080(driver, label, msg, url):
+    try:
+        driver.get('https://www.bestbuy.com/site/computer-cards-components/video-graphics-cards/abcat0507002.c?id=abcat0507002&qp=gpusv_facet%3DGraphics%20Processing%20Unit%20(GPU)~NVIDIA%20GeForce%20RTX%203080')
+        # driver.get('https://www.bestbuy.com/site/promo/latest-macbook-pro')
+        buttons = driver.find_elements(By.TAG_NAME, 'button')
+        for button in buttons:
+            if button.text == 'Add to Cart':
+                button.click()
+                send_sms_msg('Best Buy - Added an RTX 3080 item to cart!!')
+                break
+
+    except Exception as e:
+        send_sms_msg('Exception occurred while sending request to Ironmaster website.')
+        print(e)
+
+
+def selenium_check_amazon_for_rtx_3080(driver, label, msg, url):
+    try:
+        # driver.get('https://www.bestbuy.com/site/computer-cards-components/video-graphics-cards/abcat0507002.c?id=abcat0507002&qp=gpusv_facet%3DGraphics%20Processing%20Unit%20(GPU)~NVIDIA%20GeForce%20RTX%203080')
+        driver.get('https://www.amazon.com/stores/page/CD6F9C37-AF77-4FE0-B512-03975DA0D149?ingress=0&visitId=af048e71-e3f8-4c22-ab50-c4a38ae74d38')
+
+        # Amazon dynamically loads its items. Need to wait a few seconds to load
+        start_time = time.time()
+        time.sleep(5.0 - ((time.time() - start_time) % 5.0))
+
+        buttons = driver.find_elements(By.TAG_NAME, 'button')
+        for button in buttons:
+            if button.text == 'Add to Cart':
+                button.click()
+                send_sms_msg('Amazon - Added an RTX 3080 item to cart!!')
+                break
+
+    except Exception as e:
+        send_sms_msg('Exception occurred while sending request to Ironmaster website.')
+        print(e)
+
+
+'''
+Use selenium to check for an in-stock RTX 3080 and press the button to add to cart
+
+driver - (WebDriver) the selenium driver
+vendor - (str) lowercase string of the vendor
+button_text - (str) expected text that is used for the button to press
+url - (str) URL to check
+'''
+def selenium_check_for_rtx_3080(driver, vendor, button_text, url):
+    try:
+        driver.get(url)
+
+        # Amazon dynamically loads its items. Need to wait a couple of seconds to load
+        if vendor == 'amazon':
+            start_time = time.time()
+            time.sleep(2.0 - ((time.time() - start_time) % 2.0))
+
+        buttons = driver.find_elements(By.TAG_NAME, 'button')
+        for button in buttons:
+            if button.text == button_text:
+                button.click()
+                send_sms_msg(vendor + ' - Added an RTX 3080 item to cart!!')
+                break
+
+    except Exception as e:
+        # send_sms_msg('Exception occurred while sending request to  website.')
         print(e)
 
 
@@ -311,10 +378,26 @@ def main():
     schedule.every().day.at("15:00").do(send_health_check)
     schedule.every().day.at("23:00").do(send_health_check)
 
-    profile = webdriver.FirefoxProfile('/home/ndchoate/.mozilla/firefox/cktfeaqa.dev-edition-default')
-    driver = webdriver.Firefox(firefox_profile=profile,
-                               executable_path='/home/ndchoate/gecko/geckodriver',
-                               firefox_binary='/usr/local/firefox_dev/firefox-bin')
+    parser = ArgumentParser()
+    parser.add_argument('-p', '--plat', help='the platform, either linux or windows')
+    parser.add_argument('-v', '--vendor', help='the product vendor')
+
+    args = vars(parser.parse_args())
+    plat = args['plat']
+    vendor = args['vendor'].lower()
+
+    if plat == 'wnt':
+        # wnt
+        profile = webdriver.FirefoxProfile('C:\\Users\\Nathan\\AppData\\Roaming\\Mozilla\\Firefox\\Profiles\\npkxnmew.default')
+        driver = webdriver.Firefox(firefox_profile=profile,
+                                   executable_path='D:\\gecko\\geckodriver.exe',
+                                   firefox_binary='C:\\Program Files (x86)\\Mozilla Firefox\\firefox.exe')
+    else:
+        # lnx
+        profile = webdriver.FirefoxProfile('/home/ndchoate/.mozilla/firefox/cktfeaqa.dev-edition-default')
+        driver = webdriver.Firefox(firefox_profile=profile,
+                                   executable_path='/home/ndchoate/gecko/geckodriver',
+                                   firefox_binary='/usr/local/firefox_dev/firefox-bin')
 
     while True:
         schedule.run_pending()
@@ -322,16 +405,43 @@ def main():
         st = datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S')
         print('\n---------------------------------------------\n')
         print(st + ' EST\n')
-        # check_newegg_for_rtx_3080('Newegg RTX 3080s',
-        #                           'OUT OF STOCK',
-        #                           'https://www.newegg.com/p/pl?N=100007709%20601357247')
-        selenium_check_newegg_for_rtx_3080(driver,
-                                           'Newegg RTX 3080s',
-                                           'OUT OF STOCK',
-                                           'https://www.newegg.com/p/pl?N=100007709%20601357247')
+
+        if vendor == 'newegg':
+            # Test URL: https://www.newegg.com/Oculus-New-Product-Releases/EventSaleStore/ID-10011
+            selenium_check_for_rtx_3080(driver,
+                                        vendor,
+                                        'ADD TO CART',
+                                        'https://www.newegg.com/p/pl?N=100007709%20601357247')
+            # selenium_check_newegg_for_rtx_3080(driver,
+            #                                    'Newegg RTX 3080s',
+            #                                    'OUT OF STOCK',
+            #                                    'https://www.newegg.com/p/pl?N=100007709%20601357247')
+        elif vendor == 'bestbuy':
+            # Test URL: https://www.bestbuy.com/site/promo/latest-macbook-pro
+            selenium_check_for_rtx_3080(driver,
+                                        vendor,
+                                        'Add to Cart',
+                                        'https://www.bestbuy.com/site/computer-cards-components/video-graphics-cards/abcat0507002.c?id=abcat0507002&qp=gpusv_facet%3DGraphics%20Processing%20Unit%20(GPU)~NVIDIA%20GeForce%20RTX%203080')
+            # selenium_check_best_buy_for_rtx_3080(driver,
+            #                                      'Newegg RTX 3080s',
+            #                                      'OUT OF STOCK',
+            #                                      'https://www.bestbuy.com/site/promo/latest-macbook-pro')
+        elif vendor == 'amazon':
+            selenium_check_for_rtx_3080(driver,
+                                        vendor,
+                                        'Add to Cart',
+                                        'https://www.amazon.com/stores/GeForce/RTX3080_GEFORCERTX30SERIES/page/6B204EA4-AAAC-4776-82B1-D7C3BD9DDC82')
+            # selenium_check_amazon_for_rtx_3080(driver,
+            #                                      'Newegg RTX 3080s',
+            #                                      'OUT OF STOCK',
+            #                                      'https://www.bestbuy.com/site/promo/latest-macbook-pro')
 
         # time.sleep(600.0 - ((time.time() - start_time) % 600.0))
-        time.sleep(15.0 - ((time.time() - start_time) % 15.0))
+
+        if vendor == 'bestbuy':
+            time.sleep(20.0 - ((time.time() - start_time) % 20.0))
+        else:
+            time.sleep(15.0 - ((time.time() - start_time) % 15.0))
 
 
 if __name__ == '__main__':
