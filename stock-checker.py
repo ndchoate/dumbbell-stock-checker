@@ -6,12 +6,13 @@ import schedule
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium import webdriver
 import time
 from twilio.rest import Client
 
 
 account_sid = 'AC4c195802a6bcf042dcefac3c5943f1cf'
-auth_token = ''
+auth_token = '577400c194cc34626885ebc79e5f63d1'
 client = Client(account_sid, auth_token)
 
 
@@ -243,19 +244,61 @@ def check_newegg_for_rtx_3080(label, msg, url):
 
         # print('Value of res from newegg page for OUT OF STOCK instances: ' + str(res))
 
+        # options = webdriver.ChromeOptions()
+        # options.add_argument('--ignore-certificate-errors')
+        # options.add_argument("--test-type")
+        # options.add_argument("--user-data-dir=/home/ndchoate/.config/google-chrome/Profile\ 1/")
+        # options.binary_location = "/snap/bin/chromium"
+
+        # driver = webdriver.Chrome('/snap/bin/chromium.chromedriver')
+        # driver.get(url)
+
+        profile = webdriver.FirefoxProfile('/home/ndchoate/.mozilla/firefox/cktfeaqa.dev-edition-default')
+        driver = webdriver.Firefox(firefox_profile=profile, executable_path='/home/ndchoate/gecko/geckodriver', firefox_binary='/usr/local/firefox_dev/firefox-bin')
+        driver.get('https://www.newegg.com/Oculus-New-Product-Releases/EventSaleStore/ID-10011')
+        buttons = driver.find_elements(By.TAG_NAME, 'button')
+        for button in buttons:
+            if button.text == 'ADD TO CART':
+                button.click()
+                break
+        # button_element = driver.find_element_by_class_name('btn btn-primary btn-mini')
+        # driver.find_element_by_class_name('btn btn-primary btn-mini').click()
+
         item_in_stock = False
         for item in item_containers:
             content = item.text
             out_of_stock_occurrences = content.count('OUT OF STOCK')
             if out_of_stock_occurrences != 1:
                 item_in_stock = True
+                # Here's what the buttons look like in newegg:
+                # <button class="btn btn-primary btn-mini" title="some title">Add to cart <i class="fas fa-caret-right"></i></button>
+                driver = webdriver.Chrome()
+                # driver.get(url)
+                driver.get('https://www.newegg.com/Oculus-New-Product-Releases/EventSaleStore/ID-10011')
+                driver.find_element_by_class_name('btn btn-primary btn-mini').click()
                 break
 
         print('Value of item_in_stock for ' + label + ' page: ' + str(item_in_stock))
-        if item_in_stock:
-            send_sms_msg('ATTENTION! ' + label + ' page has an item that seems to be in stock.')
+        # if item_in_stock:
+            # send_sms_msg('ATTENTION! ' + label + ' page has an item that seems to be in stock.')
 
         print('\nResponse from ' + label + ' page link: ' + str(response.status_code) + '\n')
+    except Exception as e:
+        # send_sms_msg('Exception occurred while sending request to Ironmaster website.')
+        print(e)
+
+
+def selenium_check_newegg_for_rtx_3080(driver, label, msg, url):
+    try:
+        driver.get('https://www.newegg.com/p/pl?N=100007709%20601357247')
+        # driver.get('https://www.newegg.com/Oculus-New-Product-Releases/EventSaleStore/ID-10011')
+        buttons = driver.find_elements(By.TAG_NAME, 'button')
+        for button in buttons:
+            if button.text == 'ADD TO CART':
+                button.click()
+                send_sms_msg('Added an RTX 3080 item to cart!!')
+                break
+
     except Exception as e:
         send_sms_msg('Exception occurred while sending request to Ironmaster website.')
         print(e)
@@ -268,18 +311,27 @@ def main():
     schedule.every().day.at("15:00").do(send_health_check)
     schedule.every().day.at("23:00").do(send_health_check)
 
+    profile = webdriver.FirefoxProfile('/home/ndchoate/.mozilla/firefox/cktfeaqa.dev-edition-default')
+    driver = webdriver.Firefox(firefox_profile=profile,
+                               executable_path='/home/ndchoate/gecko/geckodriver',
+                               firefox_binary='/usr/local/firefox_dev/firefox-bin')
+
     while True:
         schedule.run_pending()
         ts = time.time()
         st = datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S')
         print('\n---------------------------------------------\n')
         print(st + ' EST\n')
-        check_newegg_for_rtx_3080('Newegg RTX 3080s',
-                                  'OUT OF STOCK',
-                                  'https://www.newegg.com/p/pl?N=100007709%20601357247')
+        # check_newegg_for_rtx_3080('Newegg RTX 3080s',
+        #                           'OUT OF STOCK',
+        #                           'https://www.newegg.com/p/pl?N=100007709%20601357247')
+        selenium_check_newegg_for_rtx_3080(driver,
+                                           'Newegg RTX 3080s',
+                                           'OUT OF STOCK',
+                                           'https://www.newegg.com/p/pl?N=100007709%20601357247')
 
         # time.sleep(600.0 - ((time.time() - start_time) % 600.0))
-        time.sleep(150.0 - ((time.time() - start_time) % 150.0))
+        time.sleep(15.0 - ((time.time() - start_time) % 15.0))
 
 
 if __name__ == '__main__':
