@@ -32,6 +32,10 @@ def send_sms_msg(msg):
     print(message.sid)
 
 
+def sleep(seconds):
+    time.sleep(seconds)
+
+
 def send_health_check():
     send_sms_msg('Health check')
 
@@ -364,6 +368,43 @@ def selenium_check_for_rtx_3080(driver, vendor, button_text, url):
             if button.text == button_text:
                 button.click()
                 send_sms_msg(vendor + ' - Added an RTX 3080 item to cart!!')
+                start_time = time.time()
+                time.sleep(60.0 - ((time.time() - start_time) % 60.0))
+                break
+
+    except Exception as e:
+        # send_sms_msg('Exception occurred while sending request to  website.')
+        print(e)
+
+
+'''
+Use selenium to check for an in-stock RTX 3080 and press the button to add to cart
+for a specific product page on Newegg
+
+driver - (WebDriver) the selenium driver
+vendor - (str) lowercase string of the vendor
+button_text - (str) expected text that is used for the button to press
+url - (str) URL to check
+'''
+def selenium_check_for_specific_rtx_3080_on_newegg(driver, vendor, button_text, url):
+    try:
+        driver.get(url)
+
+        buy_box = driver.find_elements(By.CLASS_NAME, 'product-buy-box')[0]
+        buttons = buy_box.find_elements(By.TAG_NAME, 'button')
+        for button in buttons:
+            if button.text == button_text:
+                button.click()
+                send_sms_msg(vendor + ' - Added an RTX 3080 to cart!!')
+                sidebar_list = driver.find_elements(By.CLASS_NAME, 'modal-content')
+                if len(sidebar_list) != 0:
+                    sidebar = sidebar_list[0]
+                    sidebar_buttons = sidebar.find_elements(By.TAG_NAME, 'button')
+                    for sidebar_button in sidebar_buttons:
+                        if sidebar_button.text == 'NO, THANKS':
+                            sidebar_button.click()
+
+                sleep(1800)  # 30 minutes
                 break
 
     except Exception as e:
@@ -372,11 +413,11 @@ def selenium_check_for_rtx_3080(driver, vendor, button_text, url):
 
 
 def main():
-    send_sms_msg('Test message')
+    # send_sms_msg('Test message')
     start_time = time.time()
     schedule.every().day.at("08:00").do(send_health_check)
     schedule.every().day.at("15:00").do(send_health_check)
-    schedule.every().day.at("23:00").do(send_health_check)
+    schedule.every().day.at("21:00").do(send_health_check)
 
     parser = ArgumentParser()
     parser.add_argument('-p', '--plat', help='the platform, either linux or windows')
@@ -399,6 +440,22 @@ def main():
                                    executable_path='/home/ndchoate/gecko/geckodriver',
                                    firefox_binary='/usr/local/firefox_dev/firefox-bin')
 
+    # Newegg listings
+    # EVGA RTX 3080 FTW3 ULTRA GAMING - $820
+    evga_ftw3 = 'https://www.newegg.com/evga-geforce-rtx-3080-10g-p5-3897-kr/p/N82E16814487518'
+
+    # EVGA RTX 3080 XC3 ULTRA GAMING - $790
+    evga_xc3 = 'https://www.newegg.com/evga-geforce-rtx-3080-10g-p5-3885-kr/p/N82E16814487520'
+
+    # ASUS TUF Gaming - $700
+    asus_tuf = 'https://www.newegg.com/asus-geforce-rtx-3080-tuf-rtx3080-10g-gaming/p/N82E16814126453'
+
+    # MSI VENTUS 3x - $700
+    msi_ventus = 'https://www.newegg.com/msi-geforce-rtx-3080-rtx-3080-ventus-3x-10g/p/N82E16814137600'
+
+    # MSI VENTUS 3X OC - $780
+    msi_ventus_oc = 'https://www.newegg.com/msi-geforce-rtx-3080-rtx-3080-ventus-3x-10g-oc/p/N82E16814137598'
+
     while True:
         schedule.run_pending()
         ts = time.time()
@@ -408,14 +465,40 @@ def main():
 
         if vendor == 'newegg':
             # Test URL: https://www.newegg.com/Oculus-New-Product-Releases/EventSaleStore/ID-10011
-            selenium_check_for_rtx_3080(driver,
-                                        vendor,
-                                        'ADD TO CART',
-                                        'https://www.newegg.com/p/pl?N=100007709%20601357247')
+            # selenium_check_for_rtx_3080(driver,
+            #                             vendor,
+            #                             'ADD TO CART',
+            #                             'https://www.newegg.com/p/pl?N=100007709%20601357247')
             # selenium_check_newegg_for_rtx_3080(driver,
             #                                    'Newegg RTX 3080s',
             #                                    'OUT OF STOCK',
             #                                    'https://www.newegg.com/p/pl?N=100007709%20601357247')
+            start_timer = time.time()
+
+            selenium_check_for_specific_rtx_3080_on_newegg(driver,
+                                                           vendor,
+                                                           'ADD TO CART',
+                                                           evga_ftw3)
+            selenium_check_for_specific_rtx_3080_on_newegg(driver,
+                                                           vendor,
+                                                           'ADD TO CART',
+                                                           evga_xc3)
+            selenium_check_for_specific_rtx_3080_on_newegg(driver,
+                                                           vendor,
+                                                           'ADD TO CART',
+                                                           asus_tuf)
+            selenium_check_for_specific_rtx_3080_on_newegg(driver,
+                                                           vendor,
+                                                           'ADD TO CART',
+                                                           msi_ventus)
+            selenium_check_for_specific_rtx_3080_on_newegg(driver,
+                                                           vendor,
+                                                           'ADD TO CART',
+                                                           msi_ventus_oc)
+
+            end_timer = time.time()
+            total_time = end_timer - start_timer
+            print('total_time on checking newegg products: ' + str(int(total_time)))
         elif vendor == 'bestbuy':
             # Test URL: https://www.bestbuy.com/site/promo/latest-macbook-pro
             selenium_check_for_rtx_3080(driver,
@@ -440,6 +523,8 @@ def main():
 
         if vendor == 'bestbuy':
             time.sleep(20.0 - ((time.time() - start_time) % 20.0))
+        elif vendor == 'newegg':
+            sleep(5)
         else:
             time.sleep(15.0 - ((time.time() - start_time) % 15.0))
 
